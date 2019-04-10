@@ -2,8 +2,8 @@ const express = require('express')
 
 const routes = express.Router()
 
-routes.get('/', (req, res) => {
-  res.send('Welcome home!')
-})
+const CorreiosController = require('./app/controllers/CorreiosController')
+
+routes.get('/frete', CorreiosController.frete)
 
 module.exports = routes
