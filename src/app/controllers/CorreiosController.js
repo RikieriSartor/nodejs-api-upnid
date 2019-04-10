@@ -8,13 +8,12 @@ const correios = new Correios()
  */
 
 class CorreiosController {
-  async frete (req, res) {
+  async freigth (req, res) {
     const args = {
       nCdFormato: 1,
       nCdServico: req.body.nCdServico ? req.body.nCdServico : '41106,40010',
       sCepOrigem: req.body.sCepOrigem ? req.body.sCepOrigem : '27110120',
       sCepDestino: req.body.sCepDestino,
-
       nVlPeso: req.body.nVlPeso,
       nVlAltura: req.body.nVlAltura,
       nVlLargura: req.body.nVlLargura,
