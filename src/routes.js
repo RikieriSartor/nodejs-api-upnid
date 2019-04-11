@@ -3,14 +3,14 @@ const express = require('express')
 const routes = express.Router()
 
 const CorreiosController = require('./app/controllers/CorreiosController')
-const PaymentController = require('./app/controllers/PaymentController')
+const PaypalController = require('./app/controllers/PaymentController')
 
 // Frete
 routes.post('/freigth', CorreiosController.freigth)
 
 // Pagamentos
-routes.post('/pay', PaymentController.pay)
-routes.get('/success', PaymentController.success)
-routes.get('/cancel', PaymentController.cancel)
+routes.post('/pay', PaypalController.pay)
+routes.get('/success', PaypalController.success)
+routes.get('/cancel', PaypalController.cancel)
 
 module.exports = routes
