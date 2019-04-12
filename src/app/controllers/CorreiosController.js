@@ -1,18 +1,12 @@
 const Correios = require('node-correios')
 const correios = new Correios()
 
-/**
- * nCdServico: 40010 SEDEX Varejo
- *             40215 SEDEX 10 Varejo
- *             41106 PAC Varejo
- */
-
 class CorreiosController {
   async freigth (req, res) {
     const args = {
       nCdFormato: 1,
-      nCdServico: req.body.nCdServico ? req.body.nCdServico : '41106,40010',
-      sCepOrigem: req.body.sCepOrigem ? req.body.sCepOrigem : '27110120',
+      nCdServico: req.body.nCdServico ? req.body.nCdServico : process.env.CD_SERVICO,
+      sCepOrigem: req.body.sCepOrigem ? req.body.sCepOrigem : process.env.CEP_ORIGEM,
       sCepDestino: req.body.sCepDestino,
       nVlPeso: req.body.nVlPeso,
       nVlAltura: req.body.nVlAltura,
@@ -28,7 +22,7 @@ class CorreiosController {
         }
         res.json(result)
       }).catch(error => {
-        return res.status(500).send({ message: `Erro de execução interna. ${error}` })
+        return res.status(500).send({ message: `Internal server error. ${error}` })
       })
   }
 }

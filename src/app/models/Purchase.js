@@ -7,6 +7,22 @@ const Purchase = new mongoose.Schema({
     ref: 'Product',
     required: true
   },
+  zipcode: {
+    type: String,
+    required: true
+  },
+  freight: {
+    type: Number,
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  token: {
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     required: true,

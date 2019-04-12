@@ -8,6 +8,9 @@ paypal.configure({
 
 class PaymentController {
   async pay (req, res) {
+    const { items } = req.body
+    const { amount } = req.body
+
     const createPaymentJSON = {
       'intent': 'sale',
       'payer': {
@@ -19,39 +22,19 @@ class PaymentController {
       },
       'transactions': [{
         'item_list': {
-          'items':
-          [
-            {
-              'name': 'Red Sox Hat',
-              'sku': '001',
-              'price': '25.00',
-              'currency': 'BRL',
-              'quantity': 1
-            },
-            {
-              'name': 'Red Sox Hat 2',
-              'sku': '002',
-              'price': '15.00',
-              'currency': 'BRL',
-              'quantity': 2
-            }
-          ]
+          'items': items
         },
-        'amount': {
-          'currency': 'BRL',
-          'total': '55.00'
-        },
-        'description': 'Hat for the best team ever'
+        'amount': amount
       }]
     }
 
     paypal.payment.create(createPaymentJSON, function (error, payment) {
       if (error) {
-        return res.status(500).send({ message: `Erro ao gerar pagamento. ${error}` })
+        return res.status(500).send({ message: `Internal server error (1). ${error}` })
       } else {
         for (let i = 0; i < payment.links.length; i++) {
           if (payment.links[i].rel === 'approval_url') {
-            return res.status(200).send({ paymentRedirectLink: payment.links[i].href })
+            return res.status(200).send({ id: payment.id, paymentRedirectLink: payment.links[i].href })
           }
         }
       }
@@ -79,8 +62,7 @@ class PaymentController {
 
     paypal.payment.execute(paymentId, ExecutePaymentJSON, function (error, payment) {
       if (error) {
-        console.log(error)
-        return res.status(500).send({ message: `Erro ao executar o pagamento. ${error.response}` })
+        return res.status(500).send({ message: `Internal server error (2). ${error.response}` })
       } else {
         return res.status(200).send(JSON.stringify(payment))
       }
@@ -88,7 +70,7 @@ class PaymentController {
   }
 
   async cancel (req, res) {
-    return res.status(400).send({ message: 'Pagamento cancelado.', token: req.query.token ? req.query.token : 'N/I' })
+    return res.status(400).send({ message: 'Payment canceled.', token: req.query.token ? req.query.token : 'N/I' })
   }
 }
 
