@@ -27,7 +27,7 @@ class PurchaseController {
     try {
       const purchase = await Purchase.findById(req.params.id).populate('products')
       if (!purchase) {
-        return res.status(400).send({ message: 'Purchase not found.' })
+        return res.status(404).send({ message: 'Purchase not found.' })
       }
       return res.json(purchase)
     } catch (error) {
@@ -39,6 +39,18 @@ class PurchaseController {
     try {
       const purchase = await Purchase.create(req.body) // tratar N produtos + token (vem do front?)
       return res.json(purchase)
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
+    }
+  }
+
+  async destroy (req, res) {
+    try {
+      const purchase = await Purchase.findByIdAndDelete(req.params.id)
+      if (!purchase) {
+        return res.status(404).send({ message: 'Purchase not found.' })
+      }
+      return res.send(purchase)
     } catch (error) {
       return res.status(500).send({ message: `Internal server error. ${error}` })
     }
@@ -85,7 +97,7 @@ class PurchaseController {
     const purchase = await Purchase.find({ token })
 
     if (!purchase) {
-      return res.status(400).send({ message: 'Invalid token. Purchase not found.' })
+      return res.status(404).send({ message: 'Invalid token. Purchase not found.' })
     }
 
     const ExecutePaymentJSON = {
@@ -114,7 +126,7 @@ class PurchaseController {
     const purchase = await Purchase.find({ token })
 
     if (!purchase) {
-      return res.status(400).send({ message: 'Invalid token. Purchase not found.' })
+      return res.status(404).send({ message: 'Invalid token. Purchase not found.' })
     }
 
     const updatedPurchase = await Purchase.findOneAndUpdate({ _id: purchase[0]._id }, { status: 'canceled' }, { new: true })

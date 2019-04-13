@@ -20,6 +20,7 @@ routes.delete('/products/:id', ProductController.destroy)
 routes.get('/purchases', PurchaseController.index)
 routes.get('/purchases/:id', PurchaseController.show)
 routes.post('/purchases', validate(validators.Purchase), PurchaseController.store)
+routes.delete('/purchases/:id', PurchaseController.destroy)
 
 routes.post('/pay', PurchaseController.pay)
 routes.get('/success', PurchaseController.success)

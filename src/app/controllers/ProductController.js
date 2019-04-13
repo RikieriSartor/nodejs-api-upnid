@@ -35,7 +35,7 @@ class PaymentController {
       const product = await Product.findById(req.params.id)
 
       if (!product) {
-        return res.status(400).send({ message: 'Product not found.' })
+        return res.status(404).send({ message: 'Product not found.' })
       }
 
       return res.json(product)
@@ -72,7 +72,7 @@ class PaymentController {
     try {
       const product = await Product.findByIdAndDelete(req.params.id)
       if (!product) {
-        return res.status(400).send({ message: 'Product not found.' })
+        return res.status(404).send({ message: 'Product not found.' })
       }
       return res.send(product)
     } catch (error) {
