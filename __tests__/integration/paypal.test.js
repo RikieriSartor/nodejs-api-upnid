@@ -10,7 +10,7 @@ test('post /pay', () => {
     .send({
       items: [
         {
-          name: 'Red Sox Hat',
+          name: 'Red Sox Hat ',
           sku: '5cafdfde206c9114a8b111f6',
           price: 25.00,
           currency: 'BRL',
