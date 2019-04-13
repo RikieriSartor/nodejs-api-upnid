@@ -18,11 +18,6 @@ const Product = new mongoose.Schema({
     type: String,
     required: true
   },
-  status: {
-    type: String,
-    required: true,
-    default: 'A'
-  },
   weight: {
     type: Number,
     required: true

@@ -6,7 +6,6 @@ module.exports = {
     description: Joi.string().required(),
     price: Joi.number().required(),
     imageURL: Joi.string().required(),
-    status: Joi.string().required(),
     weight: Joi.number().required(),
     height: Joi.number().required(),
     width: Joi.number().required(),

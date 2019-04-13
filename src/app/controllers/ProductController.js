@@ -25,8 +25,8 @@ class PaymentController {
       })
 
       return res.json(products)
-    } catch (e) {
-      return res.status(500).send({ message: 'Internal server error.' })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
     }
   }
 
@@ -39,8 +39,8 @@ class PaymentController {
       }
 
       return res.json(product)
-    } catch (e) {
-      return res.status(500).send({ message: 'Internal server error.' })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
     }
   }
 
@@ -48,8 +48,8 @@ class PaymentController {
     try {
       const product = await Product.create(req.body)
       return res.json(product)
-    } catch (e) {
-      return res.status(500).send({ message: 'Internal server error.' })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
     }
   }
 
@@ -63,8 +63,8 @@ class PaymentController {
         }
       )
       return res.json(product)
-    } catch (e) {
-      return res.status(500).send({ message: 'Internal server error.' })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
     }
   }
 
@@ -75,8 +75,8 @@ class PaymentController {
         return res.status(400).send({ message: 'Product not found.' })
       }
       return res.send(product)
-    } catch (e) {
-      return res.status(500).send({ message: 'Internal server error.' })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. ${error}` })
     }
   }
 }

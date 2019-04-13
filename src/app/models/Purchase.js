@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 
 const Purchase = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true
-  },
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   zipcode: {
     type: String,
     required: true
@@ -26,7 +22,7 @@ const Purchase = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    default: 'P'
+    default: 'pending'
   },
   createdAt: {
     type: Date,

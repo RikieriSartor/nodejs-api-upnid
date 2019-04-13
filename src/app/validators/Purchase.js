@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 module.exports = {
   body: {
-    product: Joi.string().required(),
+    products: Joi.array().items(),
     zipcode: Joi.string().required(),
     freight: Joi.number().required(),
     amount: Joi.number().required()
