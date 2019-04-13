@@ -9,7 +9,7 @@ const PurchaseController = require('./app/controllers/PurchaseController')
 
 const validators = require('./app/validators')
 
-routes.get('/hello', (req, res) => { res.send('Hello Guys ;)') })
+routes.get('/hello', (req, res) => { res.send('Hello Guys, now everithing up and running ;)') })
 
 routes.post('/freigth', CorreiosController.freigth)
 
