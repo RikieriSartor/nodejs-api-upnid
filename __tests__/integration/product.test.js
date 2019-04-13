@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const request = require('supertest')
-const address = process.env.URL_TEST ? process.env.URL_TEST : 'http://localhost'
+const address = process.env.URL_TEST ? process.env.URL_TEST : 'http://localhost:3000'
 
 var _id = null
 
