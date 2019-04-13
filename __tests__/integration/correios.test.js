@@ -2,6 +2,8 @@
 const request = require('supertest')
 const address = process.env.URL_TEST ? process.env.URL_TEST : 'http://localhost:3000'
 
+jest.setTimeout(30000)
+
 test('post /freigth', () => {
   return request(address)
     .post('/freigth')
