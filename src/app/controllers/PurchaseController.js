@@ -57,6 +57,7 @@ class PurchaseController {
   }
 
   async pay (req, res) {
+    const ref = req.headers.referer
     const { items } = req.body
     const { amount } = req.body
     const createPaymentJSON = {
@@ -65,8 +66,8 @@ class PurchaseController {
         'payment_method': 'paypal'
       },
       'redirect_urls': {
-        'return_url': process.env.PAYMENT_RETURN_URL,
-        'cancel_url': process.env.PAYMENT_CANCEL_URL
+        'return_url': ref ? `${ref}paymentconfirm` : process.env.PAYMENT_RETURN_URL,
+        'cancel_url': ref ? `${ref}paymentcancel` : process.env.PAYMENT_CANCEL_URL
       },
       'transactions': [{
         'item_list': {
