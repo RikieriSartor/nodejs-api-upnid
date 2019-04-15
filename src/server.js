@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const validate = require('express-validation')
 const Sentry = require('@sentry/node')
 const Youch = require('youch')
+const cors = require('cors')
 
 const dbConfig = require('./config/database')
 const sentryConfig = require('./config/sentry')
@@ -36,6 +37,7 @@ class App {
 
   middlewares () {
     this.express.use(express.json())
+    this.express.use(cors())
   }
 
   routes () {

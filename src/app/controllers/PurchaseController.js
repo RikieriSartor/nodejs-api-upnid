@@ -90,34 +90,38 @@ class PurchaseController {
   }
 
   async success (req, res) {
-    const payerId = req.query.PayerID
-    const paymentId = req.query.paymentId
-    const token = req.query.token
+    try {
+      const payerId = req.query.PayerID
+      const paymentId = req.query.paymentId
+      const token = req.query.token
 
-    const purchase = await Purchase.find({ token })
+      const purchase = await Purchase.find({ token })
 
-    if (!purchase) {
-      return res.status(404).send({ message: 'Invalid token. Purchase not found.' })
-    }
-
-    const ExecutePaymentJSON = {
-      'payer_id': payerId,
-      'transactions': [{
-        'amount': {
-          'currency': 'BRL',
-          'total': purchase[0].amount.toFixed(2)
-        }
-      }]
-    }
-
-    PayPal.payment.execute(paymentId, ExecutePaymentJSON, async function (error, payment) {
-      if (error) {
-        return res.status(500).send({ message: `Internal server error (2). ${error.response}` })
-      } else {
-        const updatedPurchase = await Purchase.findOneAndUpdate({ _id: purchase[0]._id }, { status: 'approved' }, { new: true })
-        return res.status(200).send(updatedPurchase)
+      if (!purchase || purchase === undefined || purchase[0].amount === undefined) {
+        return res.status(404).send({ message: 'Invalid token. Purchase not found.' })
       }
-    })
+
+      const ExecutePaymentJSON = {
+        'payer_id': payerId,
+        'transactions': [{
+          'amount': {
+            'currency': 'BRL',
+            'total': purchase[0].amount.toFixed(2)
+          }
+        }]
+      }
+
+      PayPal.payment.execute(paymentId, ExecutePaymentJSON, async function (error, payment) {
+        if (error) {
+          return res.status(500).send({ message: `Internal server error (2). ${error.response}` })
+        } else {
+          const updatedPurchase = await Purchase.findOneAndUpdate({ _id: purchase[0]._id }, { status: 'approved' }, { new: true })
+          return res.status(200).send(updatedPurchase)
+        }
+      })
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server error. (3) ${error}` })
+    }
   }
 
   async cancel (req, res) {
